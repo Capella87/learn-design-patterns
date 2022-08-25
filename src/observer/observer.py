@@ -4,24 +4,26 @@ from typing_extensions import Self
 
 class Observer(Protocol):
 
+    @abstractmethod
     def update(self: Self) -> None:
-        raise NotImplementedError()
+        pass
+
 
 class Observable(Protocol):
     observers: list[Observer]
     
     @abstractmethod
     def register(self: Self, obs: Observer) -> None:
-        self.observers.append(obs)
+        pass
     
     @abstractmethod
     def remove(self: Self, obs: Observer) -> None:
-        self.observers.remove(obs)
+        pass
     
-    @abstractmethod
-    def notify(self: Self):
+    def notify(self: Self) -> None:
         for i in self.observers:
             i.update()
+
 
 class WeatherData(Observable):
 
@@ -37,10 +39,6 @@ class WeatherData(Observable):
 
     def remove(self, obs):
         self.observers.remove(obs)
-    
-    def notify(self):
-        for i in self.observers:
-            i.update()
 
     def set_data(self: Self, temp: float, hum: float, pres: float):
         self.temperature = temp
@@ -70,6 +68,6 @@ class WeatherStation(Observer):
 
 data = WeatherData()
 
-subscriber = WeatherStation(weatherdata= data)
+subscriber = WeatherStation(weatherdata=data)
 data.set_data(temp=30.6, hum=80, pres=1013.3)
 data.set_data(temp=29.8, hum=85, pres=1014.2)
