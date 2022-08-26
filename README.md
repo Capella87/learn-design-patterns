@@ -2,7 +2,7 @@
 
 A repository contains practice code of design patterns that I've learned.
 
-This repository follows the content from \<Head First Design Patterns\> published by O'Reilly.
+This repository basically follows contents from \<Head First Design Patterns\> published by O'Reilly, but I've also refered [Microsoft Docs](https://docs.microsoft.com) and [Refactoring Guru](https://refactoring.guru/).
 
 ## Contents
     1. Strategy Pattern
