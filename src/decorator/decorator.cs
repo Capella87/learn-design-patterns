@@ -39,8 +39,6 @@ public class Decaf : Beverage
 public abstract class CondimentDecorator : Beverage
 {
     protected Beverage beverage;
-
-    public override string Description { get; } = "Untitled";
 }
 
 // Concrete decorators
