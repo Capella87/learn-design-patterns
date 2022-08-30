@@ -1,8 +1,15 @@
+// Factory Method
+// This code is a practice code to learn and apply factory method written in C#.
+// To practice, I've implemented the simplified civilization system in Age of Empires II instead of code in <Head First Design Patterns>.
+
+// To run this code, .NET 5 or above is required. I highly recommend to use .NET 6 or above.
+
 namespace AgeOfEmpiresII
 {
-    public static class Entity
+    // Enums for entities
+    public static class Entities
     {
-        public enum MilitaryUnit
+        public enum MilitaryUnits
         {
             Militia,
             Spearman,
@@ -10,73 +17,17 @@ namespace AgeOfEmpiresII
             Condottiero,
             Huskarl,
         };
-
-        public enum Technology
-        {
-            Toolworking,
-            Metalworking,
-        }
-    }
-
-    // Buildings
-    public interface IBuilding
-    {
-        public string Name { init; get; }
-        public string Description { init; get; }
-        public ref RequirementResource GetRequirements();
-    }
-
-    public abstract class MilitaryBuilding : IBuilding
-    {
-        public string Name { init; get; }
-        public string Description { init; get; }
-        protected RequirementResource _reqSource;
-
-        public ref RequirementResource GetRequirements()
-        {
-            return ref _reqSource;
-        }
-
-        protected abstract IUnit DeployUnit(Entity.MilitaryUnit e);
-        // protected abstract IResearch Research(Enum e);
-
-        public abstract IUnit RequestNewUnit(Entity.MilitaryUnit e);
-        // public abstract IResearch RequestResearch(Enum e);
-    }
-
-    public sealed class Barracks : MilitaryBuilding
-    {
-        public Barracks()
-        {
-            Name = "Barracks";
-            Description = "Test description.";
-            _reqSource = new RequirementResource(0, 175, 0, 0);
-        }
-
-        // Factory method. Used pattern matching in C#.
-        public override IUnit RequestNewUnit(Entity.MilitaryUnit e) =>
-            e switch
-            {
-                Entity.MilitaryUnit.Militia => new Militia(),
-                Entity.MilitaryUnit.Spearman => new Spearman(),
-                _ => throw new KeyNotFoundException("Wrong unit.")
-            };
-
-        protected override IUnit DeployUnit(Entity.MilitaryUnit e)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     // Resource requirements to deploy military or construct a building.
-    public struct RequirementResource
+    public struct Requirements
     {
         public int Food { get; set; } = 0;
         public int Wood { get; set; } = 0;
         public int Gold { get; set; } = 0;
         public int Stone { get; set; } = 0;
-        
-        public RequirementResource(int food, int wood, int gold, int stone)
+
+        public Requirements(int food, int wood, int gold, int stone)
         {
             Food = food;
             Wood = wood;
@@ -85,87 +36,148 @@ namespace AgeOfEmpiresII
         }
     }
 
-    // Units
-    public interface IUnit
+    // Entity interface
+    public interface IEntity
     {
         public string Name { init; get; }
         public string Description { init; get; }
-        public ref RequirementResource GetRequirements();
+        public int Health { get; set; }
+        public ref Requirements GetRequirements();
     }
 
-    public abstract class MilitaryUnit : IUnit
+    // Building interface
+    public interface IBuilding : IEntity, IDisposable
     {
-        public string Name { init; get; }
-        public string Description { init; get; }
-        protected RequirementResource _reqSource;
+        public void Demolish();
+    }
+    
+    // Building abstract classes
+    public abstract class MilitaryBuilding : IBuilding
+    {
+        protected string _name;
+        protected Requirements _requirements;
 
-        public ref RequirementResource GetRequirements()
+        public string Name
         {
-            return ref _reqSource;
+            init => _name = value;
+            get => $"'{_name} {this.GetHashCode()}'";
+        }
+        public string Description { init; get; }
+        public int Health { get; set; }
+
+        public ref Requirements GetRequirements() => ref _requirements;
+        
+        public virtual void Demolish()
+        {
+            Console.WriteLine($"{Name} is demolished.");
+            Dispose();
+        }
+        
+        public void Dispose() => GC.SuppressFinalize(this);
+        ~MilitaryBuilding() => Dispose();
+        
+        public IUnit RequestUnit(Entities.MilitaryUnits target)
+        {
+            IUnit unit = null;
+            try
+            {
+                unit = DeployUnit(target);
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return unit;
         }
 
-        public abstract void Death();
-        public abstract void Attack();
-        public abstract void Defense();
-        public abstract void Move(string unitEntityName);
+        // Factory method
+        protected abstract IUnit DeployUnit(Entities.MilitaryUnits target);
     }
 
-    public class Militia : MilitaryUnit
+    // Building classes
+    sealed class Barracks : MilitaryBuilding
+    {
+        public Barracks()
+        {
+            Name = "Barracks";
+            Description = "The Barracks is the first military building available for construction in Age of Empires II.\n" +
+                          "It is prerequisite to building the Archery Range and Stable.\n" +
+                          "It trains and improves infantry.";
+            _requirements = new Requirements(0, 175, 0, 0);
+            Health = 1500;
+            Console.WriteLine($"{Name} is constructed.");
+        }
+
+        protected override IUnit DeployUnit(Entities.MilitaryUnits target) => target switch
+        {
+            Entities.MilitaryUnits.Militia => new Militia(),
+            Entities.MilitaryUnits.Spearman => new Spearman(),
+            _ => throw new ArgumentException("Wrong request."),
+        };
+    }
+    
+    // Unit interface
+    public interface IUnit : IEntity
+    {
+        public void Die();
+        public void Move(int x, int y);
+        public void Attack(IEntity target);
+    }
+
+    // Unit abstract classes
+    public abstract class MilitaryUnit : IUnit, IDisposable
+    {
+        protected string _name;
+        protected Requirements _requirements;
+        public string Name
+        {
+            init => _name = value;
+            get => $"'{_name} {this.GetHashCode()}'";
+        }
+        
+        public string Description { init; get; }
+        public int Health { get; set; }
+
+        public ref Requirements GetRequirements() => ref _requirements;
+
+        public virtual void Die()
+        {
+            Console.WriteLine($"{Name} is dead.");
+            Dispose();
+        }
+
+        public virtual void Move(int x, int y) => Console.WriteLine($"{Name} moves to ({x}, {y}).");
+        public virtual void Attack(IEntity target) => Console.WriteLine($"{Name} attacks {target.Name}.");
+
+        public void Dispose() => GC.SuppressFinalize(this);
+        ~MilitaryUnit() => Dispose();
+    }
+
+    // Unit classes
+    public sealed class Militia : MilitaryUnit
     {
         public Militia()
         {
             Name = "Militia";
             Description = "The Militia is an infantry unit in Age of Empires II that can be trained at the Barracks.\n" +
-                "It is the first trainable military unit and the only one available to create in the Dark Age. ";
-            _reqSource = new RequirementResource(60, 20, 0, 0);
-        }
-
-        public override void Attack()
-        {
-            Console.WriteLine("Attack!");
-        }
-
-        public override void Death()
-        {
-        }
-
-        public override void Defense()
-        {
-        }
-
-        public override void Move(string unitEntityName)
-        {
-            Console.WriteLine($"{unitEntityName} is moved to there.");
+                          "It is the first trainable military unit and the only one available to create in the Dark Age.";
+            _requirements = new Requirements(60, 20, 0, 0);
+            Health = 40;
+            Console.WriteLine($"{Name} is deployed.");
         }
     }
 
-    public class Spearman : MilitaryUnit
+    public sealed class Spearman : MilitaryUnit
     {
         public Spearman()
         {
             Name = "Spearman";
             Description = "The Spearman is an infantry unit in Age of Empires II " +
-                "that can be trained at the Barracks once the Feudal Age is reached.\n" +
-                "They are a good early cavalry-counter, but are weak against virtually everything else.";
-            _reqSource = new RequirementResource(35, 25, 0, 0);
-        }
-
-        public override void Attack()
-        {
-            Console.WriteLine("Attack!");
-        }
-
-        public override void Death()
-        {
-        }
-
-        public override void Defense()
-        {
-        }
-
-        public override void Move(string unitEntityName)
-        {
-            Console.WriteLine($"{unitEntityName} is moved to there.");
+                          "that can be trained at the Barracks once the Feudal Age is reached.\n" +
+                          "They are a good early cavalry-counter, but are weak against virtually everything else.";
+            _requirements = new Requirements(35, 25, 0, 0);
+            Health = 45;
+            Console.WriteLine($"{Name} is deployed.");
         }
     }
 
@@ -173,14 +185,19 @@ namespace AgeOfEmpiresII
     {
         public static void Main(string[] args)
         {
-            var firstBarrack = new Barracks();
+            var barrack1 = new Barracks();
 
-            Console.WriteLine(firstBarrack.Name);
-            var militia1 = (MilitaryUnit)firstBarrack.RequestNewUnit(Entity.MilitaryUnit.Militia);
-            var militia2 = (MilitaryUnit)firstBarrack.RequestNewUnit(Entity.MilitaryUnit.Militia);
-            militia1.Attack();
-            militia2.Move(nameof(militia2));
-            militia1.Attack();
+            Console.WriteLine(barrack1.Name);
+            var militia1 = barrack1.RequestUnit(Entities.MilitaryUnits.Militia);
+            var spearman1 = barrack1.RequestUnit(Entities.MilitaryUnits.Spearman);
+
+            Console.WriteLine(militia1.Description);
+            Console.WriteLine();
+            militia1.Move(100, 100);
+            militia1.Attack(spearman1);
+            militia1.Attack(militia1);
+            
+            barrack1.Demolish();
         }
     }
 }
