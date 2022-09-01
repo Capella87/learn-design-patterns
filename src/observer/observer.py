@@ -1,7 +1,12 @@
+# Observer pattern
+
+# To run this code, Python 3.8 or above is required.
+
 from typing import Protocol
 from abc import abstractmethod
 from typing_extensions import Self
 
+# Observer abstract class
 class Observer(Protocol):
 
     @abstractmethod
@@ -9,6 +14,7 @@ class Observer(Protocol):
         pass
 
 
+# Provider abstract class
 class Observable(Protocol):
     observers: list[Observer]
     
@@ -25,6 +31,7 @@ class Observable(Protocol):
             i.update()
 
 
+# Provider class
 class WeatherData(Observable):
 
     temperature = None
@@ -47,6 +54,7 @@ class WeatherData(Observable):
         self.notify()
 
 
+# Observer class
 class WeatherStation(Observer):
     
     temperature = None

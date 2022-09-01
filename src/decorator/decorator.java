@@ -1,3 +1,8 @@
+// Decorator pattern
+
+// To run this code, Java 17 or later is required.
+
+// Component class
 abstract class Beverage {
     String description = "Untitled";
 

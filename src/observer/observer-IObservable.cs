@@ -1,3 +1,9 @@
+// Observer pattern using IObservable and IObserver interfaces
+
+// To run this code, .NET 5 or later is required.
+
+// Data class
+
 public struct WeatherData
 {
     private float _temperature;
@@ -16,6 +22,7 @@ public struct WeatherData
     }
 }
 
+// Provider class
 public class WeatherDataMonitor : IObservable<WeatherData>
 {
     private WeatherData _data;
@@ -61,6 +68,7 @@ public class WeatherDataMonitor : IObservable<WeatherData>
     }
 }
 
+// Observer class
 public class WeatherReporter : IObserver<WeatherData>
 {
     private IDisposable _unsubscriber;
@@ -79,12 +87,10 @@ public class WeatherReporter : IObserver<WeatherData>
 
     public virtual void OnCompleted()
     {
-
     }
     
     public virtual void OnError(Exception error)
     {
-
     }
 
     public virtual void OnNext(WeatherData value)

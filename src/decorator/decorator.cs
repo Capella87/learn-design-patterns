@@ -1,4 +1,8 @@
-// Component
+// Decorator class
+
+// To run this code, .NET 5 or later is required.
+
+// Component abstract class
 public abstract class Beverage
 {
     public virtual string Description { get; } = "Untitled";

@@ -1,7 +1,12 @@
+# Strategy pattern
+
+# To run this code, Python 3.7 or above is required.
+
 from abc import abstractclassmethod
 from asyncio import protocols
 from typing import Protocol
 
+# Feature abstract classes
 class Fly(Protocol):
     @abstractclassmethod
     def fly(self) -> None:
@@ -12,6 +17,7 @@ class Quack(Protocol):
     def quack(self) -> None:
         pass
 
+# Feature classes
 class FlyWithWings(Fly):
     def fly(self):
         print('I am flying!')
@@ -20,6 +26,7 @@ class NormalQuack(Quack):
     def quack(self):
         print('Quack!')
 
+# Main component abstract class
 class Duck(Protocol):
     flybehavior: Fly
     quackbehavior: Quack
@@ -39,7 +46,7 @@ class Duck(Protocol):
     def swim(self):
         print('All ducks can float on water. Even the fake one does!')
 
-
+# Main component classes
 class MallaradDuck(Duck):
     flybehavior = FlyWithWings()
     quackbehavior = NormalQuack()

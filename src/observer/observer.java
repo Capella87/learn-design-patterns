@@ -1,13 +1,19 @@
+// Observer pattern
+
+// To run this code, Java 17 or later is required.
+
 import java.util.ArrayList;
 import java.util.List;
 
+// Provider interface
 interface Subject {
     public void registerObserver(Observer o);
     public void removeObserver(Observer o);
     public void notifyObservers();
 }
 
-class WeatherData implements Subject {
+// Provider class
+final class WeatherData implements Subject {
     private List<Observer> observers;
     private float temperature;
     private float humidity;
@@ -56,14 +62,17 @@ class WeatherData implements Subject {
     }
 }
 
+// Observer interface
 interface Observer {
     public void update();
 }
 
+// Display feature interface
 interface DisplayElement {
     public void display();
 }
 
+// Observer class
 class CurrentConditionsDisplay implements Observer, DisplayElement {
     private float temperature;
     private float humidity;

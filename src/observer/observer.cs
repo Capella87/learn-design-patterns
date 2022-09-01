@@ -1,3 +1,8 @@
+// Observer pattern
+
+// To run this code, .NET 5 or later is required.
+
+// Provider interface
 public interface ISubject
 {
     public void Register(ISubscriber subscriber);
@@ -5,6 +10,7 @@ public interface ISubject
     public void Notify();
 }
 
+// Provider class
 public sealed class WeatherData : ISubject
 {
     float _temperature;
@@ -47,16 +53,19 @@ public sealed class WeatherData : ISubject
     }
 }
 
+// Observer interface
 public interface ISubscriber
 {
     public void Update();
 }
 
+// Display feature interface
 public interface IDisplay
 {
     public void Display();
 }
 
+// Observer class
 public sealed class Subscriber : ISubscriber, IDisplay
 {
     public WeatherData WeatherData { init; get; }

@@ -1,8 +1,14 @@
+// Strategy pattern
+
+// To run this code, .NET 5 or above is required.
+
+// Feature interface
 public interface IFly
 {
     public void Fly();
 }
 
+// Feature classes
 public class FlyWithWings : IFly
 {
     public void Fly()
@@ -27,11 +33,13 @@ public class FlyRocketPowered : IFly
     }
 }
 
+// Feature interface
 public interface IQuack
 {
     public void Quack();
 }
 
+// Feature classes
 public class NormalQuack : IQuack
 {
     public void Quack()
@@ -56,6 +64,7 @@ public class MuteQueak : IQuack
     }
 }
 
+// Main component abstract class
 public abstract class Duck
 {
     public IQuack QuackBehavior { get; set; }
@@ -79,6 +88,7 @@ public abstract class Duck
     }
 }
 
+// Main component classes
 public class MallardDuck : Duck
 {
     public MallardDuck()

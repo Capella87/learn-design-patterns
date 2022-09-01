@@ -1,7 +1,13 @@
+// Strategy pattern
+
+// To run this code, Java 17 or above is required.
+
+// Feature interface
 interface FlyBehavior {
     public void fly();
 }
 
+// Feature classes
 class FlyWithWings implements FlyBehavior {
     public void fly() {
         System.out.println("I can fly!");
@@ -20,10 +26,12 @@ class FlyRocketPowered implements FlyBehavior {
     }
 }
 
+// Feature interface
 interface QuackBehavior {
     public void quack();
 }
 
+// Feature classes
 class NormalQuack implements QuackBehavior {
     public void quack() {
         System.out.println("Quack!");
@@ -42,6 +50,7 @@ class MuteQuack implements QuackBehavior {
     }
 }
 
+// Main component abstract class
 abstract class Duck {
     FlyBehavior flyBehavior;
     QuackBehavior quackBehavior;
@@ -69,6 +78,7 @@ abstract class Duck {
     public abstract void display();
 }
 
+// Main component classes
 class MallardDuck extends Duck {
     public MallardDuck() {
         flyBehavior = new FlyWithWings();
