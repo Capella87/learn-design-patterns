@@ -102,11 +102,11 @@ class JavaChip(CondimentDecorator):
 
 
 # Main
-beverage = HouseBlend()
-print('{} ${:.2f}'.format(beverage.get_description(), beverage.cost()))
-
-beverage1 = Espresso()
-beverage1 = Soy(beverage1)
-beverage1 = Whip(beverage1)
-beverage1 = JavaChip(beverage1)
+beverage1 = HouseBlend()
 print('{} ${:.2f}'.format(beverage1.get_description(), beverage1.cost()))
+
+beverage2 = Espresso()
+beverage2 = Soy(beverage2)
+beverage2 = Whip(beverage2)
+beverage2 = JavaChip(beverage2)
+print('{} ${:.2f}'.format(beverage2.get_description(), beverage2.cost()))
