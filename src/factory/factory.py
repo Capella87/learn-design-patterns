@@ -27,18 +27,12 @@ class GameUnits(Enum):
 
 # Entity abstract class
 class Entity(Protocol):
-    @abstractmethod
-    def get_requirements(self) -> None:
-        pass
-
-    def get_description(self) -> str:
-        return self.description
+    description: str
+    requirements: Requirements
+    health: int
 
     def get_name(self) -> str:
         return '\'{} {}\''.format(self.name, hash(self))
-
-    def get_health(self) -> int:
-        return self.health
 
 
 # Entity descendant abstract classes
@@ -64,10 +58,6 @@ class Unit(Entity):
 
 # Building descendant abstract classes
 class MilitaryBuilding(Building):
-
-    def get_requirements(self) -> None:
-        return self.requirements
-
     def demolish(self) -> None:
         print('{} is demolished.'.format(self.get_name()))
         return
@@ -85,8 +75,7 @@ class MilitaryBuilding(Building):
 
 # Building classes
 class Barracks(MilitaryBuilding):
-
-    def __init__(self):
+    def __init__(self) -> None:
         self.name = "Barracks"
         self.description = '''The Barracks is the first military building available for construction in Age of Empires II.
 It is prerequisite to building the Archery Range and Stable.
@@ -117,9 +106,6 @@ class MilitaryUnit(Unit):
 
     def attack(self, target) -> None:
         print('{} attacks {}.'.format(self.get_name(), target.get_name()))
-
-    def get_requirements(self) -> None:
-        return self.requirements
 
 
 # Unit classes
@@ -152,7 +138,7 @@ print(barracks.get_name())
 militia1 = barracks.request_unit(GameUnits.MILITIA)
 spearman1 = barracks.request_unit(GameUnits.SPEARMAN)
 
-print(militia1.get_description())
+print(militia1.description)
 print()
 militia1.move(100, 100)
 militia1.attack(spearman1)
