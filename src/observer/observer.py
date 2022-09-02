@@ -1,6 +1,6 @@
 # Observer pattern
 
-# To run this code, Python 3.8 or above is required.
+# To run this code, Python 3.10 or above is required.
 
 from typing import Protocol
 from abc import abstractmethod
@@ -74,6 +74,7 @@ class WeatherStation(Observer):
         print('Humidity: ', self.humidity, end='\n\n')
 
 
+# Main
 data = WeatherData()
 
 subscriber = WeatherStation(weatherdata=data)

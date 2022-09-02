@@ -1,6 +1,6 @@
 # Strategy pattern
 
-# To run this code, Python 3.7 or above is required.
+# To run this code, Python 3.10 or above is required.
 
 from abc import abstractclassmethod
 from asyncio import protocols
@@ -61,6 +61,7 @@ class MallaradDuck(Duck):
         print('I\'m a mallard duck.')
 
 
+# Main
 duck = MallaradDuck()
 duck.perform_fly()
 duck.perform_quack()
