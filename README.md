@@ -13,9 +13,11 @@ This repository basically follows contents from \<Head First Design Patterns\> p
 
 ### Future plans
 
-* Ruby
+* C
 * Go
+* Ruby
 * Rust
+* Zig
 
 ## Contents
 
