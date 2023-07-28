@@ -6,16 +6,13 @@ This repository basically follows contents from \<Head First Design Patterns\> p
 
 ## Programming languages used in implementations
 
-* C++
 * C#
-* Java
 * Python
 
 ### Future plans
 
-* C
+* C++
 * Go
-* Ruby
 * Rust
 * Zig
 
@@ -33,4 +30,4 @@ the **Refactoring**. I've really eagered to learn it to refactor my hobby projec
 
 ---
 
-Last modified: Sep 11, 2022
+Last modified: July 28, 2023
