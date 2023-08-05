@@ -16,6 +16,10 @@ This repository basically follows contents from \<Head First Design Patterns\> p
 * Rust
 * Zig
 
+### Miscellaneous
+
+* D2 (for diagrams)
+
 ## Contents
 
 1. Strategy pattern
@@ -30,4 +34,4 @@ the **Refactoring**. I've really eagered to learn it to refactor my hobby projec
 
 ---
 
-Last modified: July 28, 2023
+Last modified: Aug 5, 2023
