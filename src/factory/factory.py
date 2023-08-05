@@ -30,6 +30,7 @@ class Entity(Protocol):
     description: str
     requirements: Requirements
     health: int
+    name: str
 
     def get_name(self) -> str:
         return '\'{} {}\''.format(self.name, hash(self))
