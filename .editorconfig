@@ -2,6 +2,12 @@ root = true
 
 [*]
 charset = utf-8
-indent_size = 4
 indent_style = space
 insert_final_newline = true
+
+[*.{!d2}]
+indent_size = 4
+
+
+[*.d2]
+indent_size = 2
