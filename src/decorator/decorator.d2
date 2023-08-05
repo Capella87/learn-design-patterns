@@ -1,0 +1,161 @@
+BeverageAbstractClass: Beverage {
+  shape: class
+  style: {
+    fill: green
+    italic: true
+  }
+
+  +Description: string
+  +Cost(): double
+
+}
+
+Espresso: Espresso {
+  shape: class
+
+  +Description: string
+  +Cost(): double
+}
+
+HouseBlend: HouseBlend {
+  shape: class
+
+  +Description: string
+  +Cost(): double
+}
+
+DarkRoast: DarkRoast {
+  shape: class
+
+  +Description: string
+  +Cost(): double
+}
+
+Decaf: Decaf {
+  shape: class
+
+  +Description: string
+  +Cost(): double
+}
+
+CondimentDecorator: {
+  shape: class
+  style: {
+    fill: purple
+  }
+  \#beverage: Beverage
+}
+
+Mocha: {
+  shape: class
+  style: {
+    fill: orange
+  }
+
+  \#Beverage: Beverage
+  +Mocha(beverage Beverage): void
+  +Description: string
+  +Cost(): double
+}
+
+Soy: {
+  shape: class
+  style: {
+    fill: orange
+  }
+
+  +Soy(beverage Beverage): void
+  \#Beverage: Beverage
+  +Description: string
+  +Cost(): double
+}
+
+Whip: {
+  shape: class
+  style: {
+    fill: orange
+  }
+  \#Beverage: Beverage
+  +Whip(beverage Beverage): void
+  +Description: string
+  +Cost(): double
+}
+
+JavaChip: {
+  shape: class
+  style: {
+    fill: orange
+  }
+
+  \#Beverage: Beverage
+  +JavaChip(beverage Beverage): void
+  +Description: string
+  +Cost(): double
+}
+
+
+direction: up
+BeverageAbstractClass <- Espresso: abstraction {
+  style: {
+    italic: true
+    stroke-dash: 3
+  }
+}
+
+BeverageAbstractClass <- HouseBlend: abstraction {
+  style: {
+    italic: true
+    stroke-dash: 3
+  }
+}
+
+BeverageAbstractClass <- Decaf: abstraction {
+  style: {
+    italic: true
+    stroke-dash: 3
+  }
+}
+
+BeverageAbstractClass <- DarkRoast: abstraction {
+  style: {
+    italic: true
+    stroke-dash: 3
+  }
+}
+
+BeverageAbstractClass <- CondimentDecorator: abstraction {
+  style: {
+    italic: true
+    stroke-dash: 3
+    stroke: red
+  }
+}
+
+CondimentDecorator <- Mocha: abstraction {
+  style: {
+    italic: true
+    stroke-dash: 3
+    stroke: brown
+  }
+}
+CondimentDecorator <- Soy: abstraction {
+  style: {
+    italic: true
+    stroke-dash: 3
+    stroke: brown
+  }
+}
+CondimentDecorator <- Whip: abstraction {
+  style: {
+    italic: true
+    stroke-dash: 3
+    stroke: brown
+  }
+}
+CondimentDecorator <- JavaChip: abstraction {
+  style: {
+    italic: true
+    stroke-dash: 3
+    stroke: brown
+  }
+}
