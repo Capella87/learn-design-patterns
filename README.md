@@ -8,17 +8,20 @@ This repository basically follows contents from \<Head First Design Patterns\> p
 
 * C#
 * Python
+* C++
+* Go
 
 ### Future plans
 
-* C++
-* Go
+* JavaScript / TypeScript
+* Lua
+* Racket
 * Rust
 * Zig
 
 ### Miscellaneous
 
-* D2 (for diagrams)
+* D2 (for diagrams to describe)
 
 ## Contents
 
@@ -34,4 +37,4 @@ the **Refactoring**. I've really eagered to learn it to refactor my hobby projec
 
 ---
 
-Last modified: Aug 5, 2023
+Last modified: May 13, 2024
